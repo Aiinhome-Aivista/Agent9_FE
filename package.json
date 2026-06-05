@@ -1,0 +1,25 @@
+{
+  "name": "aries-frontend",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev":     "vite --host 0.0.0.0 --port 3000",
+    "build":   "vite build",
+    "preview": "vite preview --port 3000",
+    "lint":    "eslint src --ext .js,.jsx"
+  },
+  "dependencies": {
+    "react":          "^18.3.1",
+    "react-dom":      "^18.3.1",
+    "axios":          "^1.7.9",
+    "lucide-react":   "^0.383.0",
+    "recharts":       "^2.13.3"
+  },
+  "devDependencies": {
+    "@types/react":       "^18.3.12",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite":               "^6.0.3",
+    "eslint":             "^9.16.0"
+  }
+}

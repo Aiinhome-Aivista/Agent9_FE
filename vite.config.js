@@ -1,0 +1,31 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: "0.0.0.0",
+    port: 3000,
+    proxy: {
+      "/api": {
+        target: process.env.VITE_API_URL || "http://0.0.0.0:3004", //http://122.163.121.176:3004
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
+  build: {
+    outDir: "dist",
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          charts: ["recharts"],
+          icons: ["lucide-react"],
+        },
+      },
+    },
+  },
+});
