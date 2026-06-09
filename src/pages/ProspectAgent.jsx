@@ -206,7 +206,13 @@ export default function ProspectAgent() {
                 {prospects.length} prospects
               </span>
             </div>
-            <div style={{ overflowX: "auto" }}>
+            <div
+              style={{
+                overflowX: "auto",
+                overflowY: "auto",
+                maxHeight: "calc(100vh - 220px)",
+              }}
+            >
               {fetchingData ? (
                 <Loader text="Loading Prospects..." />
               ) : prospects.length === 0 ? (
@@ -221,8 +227,15 @@ export default function ProspectAgent() {
                   No prospects found. Ingest CSV data and run scoring.
                 </div>
               ) : (
-                <table className="pt">
-                  <thead>
+                <table className="pt" style={{ width: "100%" }}>
+                  <thead
+                    style={{
+                      position: "sticky",
+                      top: 0,
+                      zIndex: 10,
+                      backgroundColor: "var(--bg)",
+                    }}
+                  >
                     <tr>
                       <th>RANK</th>
                       <th>CUSTOMER</th>
@@ -231,7 +244,7 @@ export default function ProspectAgent() {
                       <th>SIGNALS</th>
                       {tab === "renewal" && <th>DAYS LEFT</th>}
                       <th>URGENCY</th>
-                      <th></th>
+                      <th>Insights</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -360,7 +373,16 @@ export default function ProspectAgent() {
         </div>
 
         {selected && (
-          <div className="ani" style={{ width: 340, flexShrink: 0 }}>
+          <div
+            className="ani"
+            style={{
+              width: 500,
+              flexShrink: 0,
+              maxHeight: "calc(100vh - 60px)",
+              overflowY: "auto",
+            }}
+          >
+            {" "}
             <div className="card" style={{ position: "sticky", top: 0 }}>
               <div
                 style={{
@@ -513,7 +535,7 @@ export default function ProspectAgent() {
                   className="air ani"
                   style={{
                     fontSize: 12,
-                    maxHeight: 320,
+                    maxHeight: 500,
                     overflowY: "auto",
                     marginBottom: 8,
                   }}
