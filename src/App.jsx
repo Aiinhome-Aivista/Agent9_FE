@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import STYLES from "./styles.js";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
@@ -17,6 +17,18 @@ export default function App() {
   const [view, setView] = useState(() => {
     return localStorage.getItem("aries_authenticated") === "true" ? "overview" : "landing";
   });
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("aries_theme") || "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("aries_theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === "dark" ? "light" : "dark");
+  };
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -39,7 +51,7 @@ export default function App() {
         <div className="app">
           <Sidebar view={view} setView={setView} />
           <main className="main">
-            <Header view={view} onLogout={handleLogout} />
+            <Header view={view} onLogout={handleLogout} theme={theme} toggleTheme={toggleTheme} />
             <div className="mc">
               {view === "overview" && <Overview setView={setView} />}
               {view === "connector" && <Connector />}
@@ -52,7 +64,7 @@ export default function App() {
       ) : view === "login" ? (
         <Login onLogin={handleLogin} onBackToLanding={() => setView("landing")} />
       ) : (
-        <Landing onLaunchConsole={() => setView(isAuthenticated ? "overview" : "login")} />
+        <Landing onLaunchConsole={() => setView(isAuthenticated ? "overview" : "login")} theme={theme} toggleTheme={toggleTheme} />
       )}
     </>
   );

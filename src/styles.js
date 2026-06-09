@@ -16,6 +16,16 @@ const STYLES = `
   --t1:#EEF2FF;--t2:#8BA4C0;--t3:#4A637E;--t4:#1E2E42;
   --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
   --r:8px;--rl:12px;
+  --nav-bg: rgba(6,12,23,0.7);
+}
+[data-theme="light"] {
+  --bg:#F8FAFC;--surf:#F1F5F9;--card:#FFFFFF;--elev:#E2E8F0;
+  --bdr:rgba(15,23,42,0.1);--bdr-hi:rgba(245,166,35,0.4);
+  --amd:rgba(245,166,35,0.15);--ted:rgba(20,184,166,0.15);
+  --bld:rgba(75,142,245,0.15);--grd:rgba(34,197,94,0.15);
+  --rdd:rgba(244,63,94,0.15);--pud:rgba(167,139,250,0.15);
+  --t1:#0F172A;--t2:#475569;--t3:#64748B;--t4:#CBD5E1;
+  --nav-bg: rgba(248,250,252,0.8);
 }
 html,body,#root{height:100%;font-family:var(--fb);background:var(--bg);color:var(--t1)}
 ::-webkit-scrollbar{width:4px;height:4px}
@@ -141,7 +151,7 @@ html,body,#root{height:100%;font-family:var(--fb);background:var(--bg);color:var
 }
 .lp-nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(6,12,23,0.7);
+  background: var(--nav-bg, rgba(6,12,23,0.7));
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--bdr);
   height: 70px;

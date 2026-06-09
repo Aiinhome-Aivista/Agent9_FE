@@ -13,9 +13,11 @@ import {
   Server,
   Activity,
   CheckCircle,
+  Sun,
+  Moon,
 } from "lucide-react";
 
-export default function Landing({ onLaunchConsole }) {
+export default function Landing({ onLaunchConsole, theme, toggleTheme }) {
   const [activeNode, setActiveNode] = useState("connector");
 
   const nodes = [
@@ -106,7 +108,10 @@ export default function Landing({ onLaunchConsole }) {
           <a href="#architecture" className="lp-nav-link">Architecture</a>
           <a href="#philosophy" className="lp-nav-link">Philosophy</a>
         </div>
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <button onClick={toggleTheme} className="btn bg2 bsm" title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}>
+            {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
+          </button>
           <button onClick={onLaunchConsole} className="btn bp2 bsm" style={{ fontWeight: 600 }}>
             Launch Console
           </button>

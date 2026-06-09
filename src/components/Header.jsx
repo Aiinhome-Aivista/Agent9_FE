@@ -1,4 +1,4 @@
-import { Bell, Settings, LogOut } from "lucide-react";
+import { Bell, Settings, LogOut, Sun, Moon } from "lucide-react";
 
 const TITLES = {
   overview: ["System Overview", "Multi-agent pipeline"],
@@ -17,7 +17,7 @@ const TITLES = {
   ],
 };
 
-export default function Header({ view, onLogout }) {
+export default function Header({ view, onLogout, theme, toggleTheme }) {
   const [title, sub] = TITLES[view] || ["", ""];
 
   return (
@@ -27,6 +27,9 @@ export default function Header({ view, onLogout }) {
         <p>{sub}</p>
       </div>
       <div className="mh-r">
+        <button onClick={toggleTheme} className="btn bg2 bsm" title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}>
+          {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
+        </button>
         <button className="btn bg2 bsm">
           <Bell size={13} />
         </button>
