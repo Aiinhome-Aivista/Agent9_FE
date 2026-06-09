@@ -27,19 +27,27 @@ export default function Header({ view, onLogout, theme, toggleTheme }) {
         <p>{sub}</p>
       </div>
       <div className="mh-r">
-        <button onClick={toggleTheme} className="btn bg2 bsm" title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}>
+        <button
+          onClick={toggleTheme}
+          className="btn bg2 bsm"
+          title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+        >
           {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
         </button>
-        <button className="btn bg2 bsm">
+        {/* <button className="btn bg2 bsm">
           <Bell size={13} />
         </button>
         <button className="btn bg2 bsm">
           <Settings size={13} />
-        </button>
+        </button> */}
         <button
           onClick={onLogout}
           className="btn bg2 bsm"
-          style={{ color: "var(--rd)", borderColor: "rgba(244,63,94,0.15)", gap: 4 }}
+          style={{
+            color: "var(--rd)",
+            borderColor: "rgba(244,63,94,0.15)",
+            gap: 4,
+          }}
         >
           <LogOut size={13} />
           <span>Sign Out</span>
@@ -48,4 +56,3 @@ export default function Header({ view, onLogout, theme, toggleTheme }) {
     </header>
   );
 }
-

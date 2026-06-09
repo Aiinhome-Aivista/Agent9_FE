@@ -1,10 +1,4 @@
-import {
-  Activity,
-  Archive,
-  Database,
-  Target,
-  Zap,
-} from "lucide-react";
+import { Activity, Archive, Database, Target, Zap } from "lucide-react";
 import Dot from "./Dot";
 import AgentBadge from "./AgentBadge";
 
@@ -28,19 +22,19 @@ const NAV = [
     Icon: Target,
     agent: "prospectAgent",
   },
-  {
-    id: "campaigns",
-    label: "Campaign Execution",
-    Icon: Zap,
-    agent: "campaign",
-  },
+  // {
+  //   id: "campaigns",
+  //   label: "Campaign Execution",
+  //   Icon: Zap,
+  //   agent: "campaign",
+  // },
 ];
 
 const AGENTS = {
   connector: "active",
   policyWarehouse: "active",
   prospectAgent: "active",
-  campaign: "idle",
+  // campaign: "idle",
 };
 
 export default function Sidebar({ view, setView }) {
@@ -72,7 +66,7 @@ export default function Sidebar({ view, setView }) {
             ["Connector", "active"],
             ["Policy WH", "active"],
             ["Prospect AI", "active"],
-            ["Campaign", "idle"],
+            // ["Campaign", "idle"],
           ].map(([n, s]) => (
             <div className="asr" key={n}>
               <Dot s={s} />
