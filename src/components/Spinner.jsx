@@ -1,5 +1,5 @@
-import { Loader } from "lucide-react";
+import { Activity } from "lucide-react";
 
 export default function Spinner() {
-  return <Loader size={13} className="spin" />;
+  return <Activity size={13} className="spin" />;
 }

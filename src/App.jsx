@@ -23,6 +23,7 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.removeProperty("--bg");
     localStorage.setItem("aries_theme", theme);
   }, [theme]);
 

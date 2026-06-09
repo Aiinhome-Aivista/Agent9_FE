@@ -10,22 +10,25 @@ import {
 } from "lucide-react";
 import * as api from "../api.js";
 import Err from "../components/Err";
+import Loader from "../components/Loader";
 
 export default function Overview({ setView }) {
   const [metrics, setMetrics] = useState(null);
   const [logs, setLogs] = useState([]);
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .getDashboardMetrics()
-      .then(setMetrics)
-      .catch((e) => setErr(e.message));
-    api
-      .getLogs(null, 20)
-      .then(setLogs)
-      .catch(() => { });
+    setLoading(true);
+    Promise.all([
+      api.getDashboardMetrics().then(setMetrics).catch((e) => setErr(e.message)),
+      api.getLogs(null, 20).then(setLogs).catch(() => { })
+    ]).finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return <Loader text="Loading Overview..." />;
+  }
 
   const M = metrics || {};
   const cards = [

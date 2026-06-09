@@ -11,6 +11,7 @@ import {
 import * as api from "../api.js";
 import Err from "../components/Err";
 import Spinner from "../components/Spinner";
+import Loader from "../components/Loader";
 
 export default function PolicyWarehouse() {
   const [policies, setPolicies] = useState([]);
@@ -87,11 +88,16 @@ export default function PolicyWarehouse() {
     }
   };
 
-  const load = () =>
-    api
+  const [fetchingData, setFetchingData] = useState(true);
+
+  const load = () => {
+    setFetchingData(true);
+    return api
       .listPolicies()
       .then(setPolicies)
-      .catch((e) => setErr(e.message));
+      .catch((e) => setErr(e.message))
+      .finally(() => setFetchingData(false));
+  };
   useEffect(() => {
     load();
   }, []);
@@ -436,7 +442,13 @@ export default function PolicyWarehouse() {
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <div className="stl">Policy Library ({policies.length})</div>
-          {policies.map((p) => (
+          {fetchingData ? (
+            <div className="card" style={{ padding: 0 }}>
+              <Loader text="Loading Policies..." />
+            </div>
+          ) : (
+            <>
+              {policies.map((p) => (
             <div
               key={p.id}
               style={{
@@ -552,6 +564,8 @@ export default function PolicyWarehouse() {
             >
               No policies yet. Click Add Policy to begin.
             </div>
+              )}
+            </>
           )}
           {uploadedFiles.length > 0 && (
             <div

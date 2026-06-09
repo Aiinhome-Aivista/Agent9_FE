@@ -13,6 +13,7 @@ import {
 import * as api from "../api.js";
 import Err from "../components/Err";
 import Spinner from "../components/Spinner";
+import Loader from "../components/Loader";
 
 export default function Connector() {
   const [tab, setTab] = useState("csv");
@@ -40,6 +41,8 @@ export default function Connector() {
 
 
 
+  const [fetchingSources, setFetchingSources] = useState(true);
+
   const fetchCustomers = () => {
     setCustLoading(true);
     api.getCustomersData()
@@ -55,10 +58,12 @@ export default function Connector() {
   };
 
   useEffect(() => {
+    setFetchingSources(true);
     api
       .listSources()
       .then(setSources)
-      .catch(() => { });
+      .catch(() => {})
+      .finally(() => setFetchingSources(false));
 
     fetchCustomers();
   }, []);
@@ -330,7 +335,9 @@ export default function Connector() {
                 </span>
               </div>
               <div style={{ flex: 1, overflowY: "auto", paddingRight: 4 }}>
-                {sources.length === 0 && (
+                {fetchingSources ? (
+                  <Loader text="Loading sources..." />
+                ) : sources.length === 0 ? (
                   <div
                     style={{
                       color: "var(--t3)",
@@ -341,8 +348,8 @@ export default function Connector() {
                   >
                     No sources yet. Upload a CSV to begin.
                   </div>
-                )}
-                {sources.map((s) => (
+                ) : (
+                  sources.map((s) => (
                   <div
                     key={s.id}
                     style={{
@@ -409,7 +416,7 @@ export default function Connector() {
                       )}
                     </div>
                   </div>
-                ))}
+                )))}
               </div>
             </div>
           </div>
@@ -680,7 +687,9 @@ export default function Connector() {
           </button>
         </div>
 
-        {paginatedCustomers.length === 0 ? (
+        {custLoading && customers.length === 0 ? (
+          <Loader text="Loading customers..." />
+        ) : paginatedCustomers.length === 0 ? (
           <div
             style={{
               color: "var(--t3)",

@@ -4,8 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ARIES — Agentic Revenue Intelligence Engine</title>
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('aries_theme');
+          if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.style.setProperty('--bg', '#F8FAFC');
+          } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.style.setProperty('--bg', '#060C17');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <style>
-      body { margin: 0; background: #060C17; }
+      body { margin: 0; background: var(--bg, #060C17); }
       #root { height: 100vh; }
     </style>
   </head>

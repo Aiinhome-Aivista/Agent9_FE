@@ -3,6 +3,7 @@ import { Cpu, Eye, Filter, RefreshCw, UserCheck, X, Zap } from "lucide-react";
 import * as api from "../api.js";
 import Err from "../components/Err";
 import Spinner from "../components/Spinner";
+import Loader from "../components/Loader";
 import ScoreBar from "../components/ScoreBar";
 import UBadge from "../components/UBadge";
 
@@ -207,17 +208,7 @@ export default function ProspectAgent() {
             </div>
             <div style={{ overflowX: "auto" }}>
               {fetchingData ? (
-                <div
-                  style={{
-                    padding: 64,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minHeight: 300,
-                  }}
-                >
-                  <Spinner />
-                </div>
+                <Loader text="Loading Prospects..." />
               ) : prospects.length === 0 ? (
                 <div
                   style={{

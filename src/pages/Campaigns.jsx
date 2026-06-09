@@ -8,6 +8,7 @@ import {
 import * as api from "../api.js";
 import Err from "../components/Err";
 import Spinner from "../components/Spinner";
+import Loader from "../components/Loader";
 
 export default function Campaigns() {
   const [campaigns, setCampaigns] = useState([]);
@@ -19,14 +20,18 @@ export default function Campaigns() {
     description: "",
   });
   const [loading, setLoading] = useState(false);
+  const [fetchingData, setFetchingData] = useState(true);
   const [messages, setMessages] = useState(null);
   const [err, setErr] = useState("");
 
-  const load = () =>
-    api
+  const load = () => {
+    setFetchingData(true);
+    return api
       .listCampaigns()
       .then(setCampaigns)
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setFetchingData(false));
+  };
   useEffect(() => {
     load();
   }, []);
@@ -202,7 +207,9 @@ export default function Campaigns() {
       )}
 
       <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-        {campaigns.length === 0 ? (
+        {fetchingData ? (
+          <Loader text="Loading Campaigns..." />
+        ) : campaigns.length === 0 ? (
           <div
             style={{
               padding: 32,
