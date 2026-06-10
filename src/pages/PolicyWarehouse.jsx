@@ -34,6 +34,7 @@ export default function PolicyWarehouse() {
   const [indexing, setIndexing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
+  const [relevanceData, setRelevanceData] = useState(null);
 
   const resetAddState = () => {
     setForm({
@@ -48,6 +49,7 @@ export default function PolicyWarehouse() {
     setUploadedFile(null);
     setUploadStatus("");
     setDocParsed(false);
+    setRelevanceData(null);
   };
 
   const handleDocUpload = async (file) => {
@@ -57,6 +59,7 @@ export default function PolicyWarehouse() {
     setUploadedFile(file);
     setDocParsed(false);
     setUploadingFile(true);
+    setRelevanceData(null);
     try {
       const extracted = await api.extractPolicyDoc(file);
       setForm((f) => ({
@@ -80,6 +83,13 @@ export default function PolicyWarehouse() {
       }));
       setDocParsed(true);
       setUploadStatus("Document parsed. Please review the form and save.");
+      if (extracted.relevance_score !== undefined) {
+        setRelevanceData({
+          score: extracted.relevance_score,
+          threshold: extracted.relevance_threshold,
+          isRelevant: extracted.is_relevant,
+        });
+      }
     } catch (e) {
       setErr(e.message);
     } finally {
@@ -347,6 +357,25 @@ export default function PolicyWarehouse() {
                 {uploadStatus}
               </div>
             )}
+            {relevanceData && (
+              <div
+                style={{
+                  marginTop: 8,
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color:
+                    relevanceData.score >= relevanceData.threshold
+                      ? "var(--gr)"
+                      : "var(--rd)",
+                }}
+              >
+                Relevance Score: {relevanceData.score} (Threshold:{" "}
+                {relevanceData.threshold}) -{" "}
+                {relevanceData.score >= relevanceData.threshold
+                  ? "Relevant"
+                  : "Not Relevant"}
+              </div>
+            )}
           </div>
           {docParsed && (
             <>
@@ -422,7 +451,12 @@ export default function PolicyWarehouse() {
                 <button
                   className="btn bp2"
                   onClick={doCreate}
-                  disabled={loading || !form.name}
+                  disabled={
+                    loading ||
+                    !form.name ||
+                    (relevanceData &&
+                      relevanceData.score < relevanceData.threshold)
+                  }
                 >
                   {loading ? <Spinner /> : <Upload size={13} />}
                   {loading ? "Saving…" : "Create Policy"}

@@ -63,8 +63,8 @@ export const syncZohoCRM = () =>
 export const listPolicies = () =>
   api.get("/api/policy/list").then((r) => r.data);
 
-// export const createPolicy = (payload) =>
-//   api.post("/api/policy/create", payload).then((r) => r.data);
+export const createPolicy = (payload) =>
+  api.post("/api/policy/create", payload).then((r) => r.data);
 
 // export const uploadPolicyDoc = (policyId, file) => {
 //   const fd = new FormData();
