@@ -22,19 +22,19 @@ const NAV = [
     Icon: Target,
     agent: "prospectAgent",
   },
-  // {
-  //   id: "campaigns",
-  //   label: "Campaign Execution",
-  //   Icon: Zap,
-  //   agent: "campaign",
-  // },
+  {
+    id: "campaigns",
+    label: "Campaign Execution",
+    Icon: Zap,
+    agent: "campaign",
+  },
 ];
 
 const AGENTS = {
   connector: "active",
   policyWarehouse: "active",
   prospectAgent: "active",
-  // campaign: "idle",
+  campaign: "active",
 };
 
 export default function Sidebar({ view, setView }) {
@@ -66,7 +66,7 @@ export default function Sidebar({ view, setView }) {
             ["Connector", "active"],
             ["Policy WH", "active"],
             ["Prospect AI", "active"],
-            // ["Campaign", "idle"],
+            ["Campaign", "active"],
           ].map(([n, s]) => (
             <div className="asr" key={n}>
               <Dot s={s} />
