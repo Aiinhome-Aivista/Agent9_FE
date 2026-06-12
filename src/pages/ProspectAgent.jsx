@@ -600,6 +600,19 @@ export default function ProspectAgent() {
                       ))}
                     </div>
                   )}
+                  {analysis.best_time && (
+                    <div
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 600,
+                      }}
+                    >
+                      <span style={{ color: "var(--am)" }}>Best Time: </span>
+                      <span style={{ color: "var(--t1)" }}>
+                        {analysis.best_time}
+                      </span>
+                    </div>
+                  )}
                   {analysis.next_action && (
                     <div
                       style={{

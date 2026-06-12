@@ -24,16 +24,20 @@ export default function Campaigns() {
   const [messages, setMessages] = useState(null);
   const [err, setErr] = useState("");
 
-  const load = () => {
-    setFetchingData(true);
+  const load = (silent = false) => {
+    if (!silent) setFetchingData(true);
     return api
       .listCampaigns()
       .then(setCampaigns)
       .catch(() => {})
-      .finally(() => setFetchingData(false));
+      .finally(() => {
+        if (!silent) setFetchingData(false);
+      });
   };
   useEffect(() => {
     load();
+    const interval = setInterval(() => load(true), 3000);
+    return () => clearInterval(interval);
   }, []);
 
   const doCreate = async () => {

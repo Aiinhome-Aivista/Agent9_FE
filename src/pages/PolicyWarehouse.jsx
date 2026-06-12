@@ -483,121 +483,121 @@ export default function PolicyWarehouse() {
           ) : (
             <>
               {policies.map((p) => (
-            <div
-              key={p.id}
-              style={{
-                background: "var(--card)",
-                border: "1px solid var(--bdr)",
-                borderRadius: "var(--rl)",
-                padding: 16,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                }}
-              >
-                <span className={`ptb t${p.policy_type}`}>
-                  {(p.policy_type || "").toUpperCase()}
-                </span>
-                <button
-                  className="btn bxs bg2"
-                  onClick={() => doDelete(p.id)}
-                  style={{ color: "var(--rd)" }}
+                <div
+                  key={p.id}
+                  style={{
+                    background: "var(--card)",
+                    border: "1px solid var(--bdr)",
+                    borderRadius: "var(--rl)",
+                    padding: 16,
+                  }}
                 >
-                  <Trash2 size={10} />
-                </button>
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--fd)",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  marginBottom: 4,
-                }}
-              >
-                {p.name}
-              </div>
-              <div
-                style={{ fontSize: 11, color: "var(--t3)", marginBottom: 8 }}
-              >
-                {p.coverage_range && (
-                  <>
-                    Coverage:{" "}
-                    <span style={{ color: "var(--am)" }}>
-                      {p.coverage_range}
-                    </span>{" "}
-                    ·{" "}
-                  </>
-                )}
-                {p.premium_range && (
-                  <>
-                    Premium:{" "}
-                    <span style={{ color: "var(--t2)" }}>
-                      {p.premium_range}
-                    </span>
-                  </>
-                )}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 4,
-                  marginBottom: 8,
-                }}
-              >
-                {(p.features || []).map((f) => (
-                  <span
-                    key={f}
-                    style={{
-                      fontSize: 10,
-                      padding: "2px 7px",
-                      background: "var(--elev)",
-                      color: "var(--t2)",
-                      borderRadius: 4,
-                      border: "1px solid var(--bdr)",
-                    }}
-                  >
-                    {f}
-                  </span>
-                ))}
-              </div>
-              {p.is_indexed && (p.propensity_targets || []).length > 0 && (
-                <div>
                   <div
                     style={{
-                      fontSize: 10,
-                      color: "var(--t3)",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <span className={`ptb t${p.policy_type}`}>
+                      {(p.policy_type || "").toUpperCase()}
+                    </span>
+                    <button
+                      className="btn bxs bg2"
+                      onClick={() => doDelete(p.id)}
+                      style={{ color: "var(--rd)" }}
+                    >
+                      <Trash2 size={10} />
+                    </button>
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--fd)",
+                      fontSize: 14,
+                      fontWeight: 700,
                       marginBottom: 4,
                     }}
                   >
-                    PROPENSITY TARGETS:
+                    {p.name}
                   </div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
-                    {(p.propensity_targets || []).map((t) => (
-                      <span key={t} className="sc">
-                        {t}
+                  <div
+                    style={{ fontSize: 11, color: "var(--t3)", marginBottom: 8 }}
+                  >
+                    {p.coverage_range && (
+                      <>
+                        Coverage:{" "}
+                        <span style={{ color: "var(--am)" }}>
+                          {p.coverage_range}
+                        </span>{" "}
+                        ·{" "}
+                      </>
+                    )}
+                    {p.premium_range && (
+                      <>
+                        Premium:{" "}
+                        <span style={{ color: "var(--t2)" }}>
+                          {p.premium_range}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 4,
+                      marginBottom: 8,
+                    }}
+                  >
+                    {(p.features || []).map((f) => (
+                      <span
+                        key={f}
+                        style={{
+                          fontSize: 10,
+                          padding: "2px 7px",
+                          background: "var(--elev)",
+                          color: "var(--t2)",
+                          borderRadius: 4,
+                          border: "1px solid var(--bdr)",
+                        }}
+                      >
+                        {f}
                       </span>
                     ))}
                   </div>
+                  {p.is_indexed && (p.propensity_targets || []).length > 0 && (
+                    <div>
+                      <div
+                        style={{
+                          fontSize: 10,
+                          color: "var(--t3)",
+                          marginBottom: 4,
+                        }}
+                      >
+                        PROPENSITY TARGETS:
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+                        {(p.propensity_targets || []).map((t) => (
+                          <span key={t} className="sc">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
-          {policies.length === 0 && (
-            <div
-              style={{
-                color: "var(--t3)",
-                fontSize: 12,
-                textAlign: "center",
-                padding: "20px 0",
-              }}
-            >
-              No policies yet. Click Add Policy to begin.
-            </div>
+              ))}
+              {policies.length === 0 && (
+                <div
+                  style={{
+                    color: "var(--t3)",
+                    fontSize: 12,
+                    textAlign: "center",
+                    padding: "20px 0",
+                  }}
+                >
+                  No policies yet. Click Add Policy to begin.
+                </div>
               )}
             </>
           )}
