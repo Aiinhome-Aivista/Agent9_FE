@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Cpu,
-  Play,
-  Plus,
-  X,
-} from "lucide-react";
+import { Cpu, Play, Plus, X } from "lucide-react";
 import * as api from "../api.js";
 import Err from "../components/Err";
 import Spinner from "../components/Spinner";
@@ -12,14 +7,18 @@ import Loader from "../components/Loader";
 
 export default function Campaigns() {
   const [campaigns, setCampaigns] = useState([]);
+  const [policies, setPolicies] = useState([]);
   const [showNew, setShowNew] = useState(false);
+  const [isPolicyWise, setIsPolicyWise] = useState(false);
   const [form, setForm] = useState({
     name: "",
     campaign_type: "new_policy",
     channel: "Email",
     description: "",
+    selected_policy: "",
   });
   const [loading, setLoading] = useState(false);
+  const [loadingPolicies, setLoadingPolicies] = useState(true);
   const [fetchingData, setFetchingData] = useState(true);
   const [messages, setMessages] = useState(null);
   const [err, setErr] = useState("");
@@ -34,8 +33,21 @@ export default function Campaigns() {
         if (!silent) setFetchingData(false);
       });
   };
+
+  const loadPolicies = () => {
+    setLoadingPolicies(true);
+    return api
+      .listPolicies()
+      .then(setPolicies)
+      .catch(() => {})
+      .finally(() => {
+        setLoadingPolicies(false);
+      });
+  };
+
   useEffect(() => {
     load();
+    loadPolicies();
     const interval = setInterval(() => load(true), 3000);
     return () => clearInterval(interval);
   }, []);
@@ -44,8 +56,25 @@ export default function Campaigns() {
     setLoading(true);
     setErr("");
     try {
-      await api.createCampaign(form);
+      if (isPolicyWise) {
+        const selectedPolicy = policies.find(
+          (p) => p.id === form.selected_policy,
+        );
+        console.log(
+          "Creating policy-wise campaign for policy:",
+          selectedPolicy,
+        );
+        await api.createPolicyWiseCampaign({
+          policy_id: selectedPolicy.id,
+          name: form.name,
+          description: form.description,
+          campaign_type: form.campaign_type,
+        });
+      } else {
+        await api.createCampaign(form);
+      }
       setShowNew(false);
+      setIsPolicyWise(false);
       await load();
     } catch (e) {
       setErr(e.message);
@@ -199,10 +228,93 @@ export default function Campaigns() {
               }
             />
           </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "10px 0",
+            }}
+          >
+            <input
+              type="checkbox"
+              id="policyWiseCampaign"
+              checked={isPolicyWise}
+              onChange={(e) => {
+                setIsPolicyWise(e.target.checked);
+                if (!e.target.checked) {
+                  setForm((f) => ({ ...f, selected_policies: [] }));
+                }
+              }}
+              style={{
+                cursor: "pointer",
+                width: 20,
+                height: 20,
+                accentColor: "var(--am)",
+                borderRadius: 4,
+              }}
+            />
+            <label
+              htmlFor="policyWiseCampaign"
+              style={{
+                cursor: "pointer",
+                fontSize: 13,
+                fontWeight: 500,
+                color: "var(--t1)",
+                userSelect: "none",
+              }}
+            >
+              Policy Wise Campaign
+            </label>
+          </div>
+          {isPolicyWise && (
+            <div className="fg">
+              <label className="fl">Select Policy</label>
+              {loadingPolicies ? (
+                <div
+                  style={{ fontSize: 12, color: "var(--t3)", padding: "8px 0" }}
+                >
+                  Loading policies...
+                </div>
+              ) : (
+                <select
+                  className="fi"
+                  value={form.selected_policy}
+                  onChange={(e) => {
+                    // const policyId = e.target.value
+                    //   ? parseInt(e.target.value)
+                    //   : null;
+                    setForm((f) => ({
+                      ...f,
+                      selected_policy: e.target.value,
+                    }));
+                  }}
+                >
+                  <option value="">Select a policy</option>
+                  {policies.length === 0 ? (
+                    <option disabled>
+                      No policies available. Add policies in Policy Warehouse.
+                    </option>
+                  ) : (
+                    policies.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.name} ({p.policy_type})
+                      </option>
+                    ))
+                  )}
+                </select>
+              )}
+            </div>
+          )}
           <button
             className="btn bp2"
             onClick={doCreate}
-            disabled={loading || !form.name}
+            disabled={
+              loading ||
+              !form.name ||
+              (isPolicyWise && form.selected_policies.length === 0)
+            }
+            style={{ marginTop: 12 }}
           >
             {loading ? <Spinner /> : <Plus size={13} />}
             {loading ? "Creating…" : "Create"}

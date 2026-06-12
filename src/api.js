@@ -134,6 +134,9 @@ export const listCampaigns = () =>
 export const createCampaign = (payload) =>
   api.post("/api/campaigns/", payload).then((r) => r.data);
 
+export const createPolicyWiseCampaign = (payload) =>
+  api.post("/api/campaigns/policy-wise", payload).then((r) => r.data);
+
 export const launchCampaign = (campaignId) =>
   api.post(`/api/campaigns/${campaignId}/launch`).then((r) => r.data);
 
