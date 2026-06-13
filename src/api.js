@@ -137,6 +137,9 @@ export const createCampaign = (payload) =>
 export const createPolicyWiseCampaign = (payload) =>
   api.post("/api/campaigns/policy-wise", payload).then((r) => r.data);
 
+export const getPolicyTargetCount = (policyId, channel) =>
+  api.get(`/api/campaigns/policy-wise-target-count/${policyId}`, { params: { channel } }).then((r) => r.data);
+
 export const launchCampaign = (campaignId) =>
   api.post(`/api/campaigns/${campaignId}/launch`).then((r) => r.data);
 

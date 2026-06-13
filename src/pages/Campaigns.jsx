@@ -22,13 +22,29 @@ export default function Campaigns() {
   const [fetchingData, setFetchingData] = useState(true);
   const [messages, setMessages] = useState(null);
   const [err, setErr] = useState("");
+  const [targetCount, setTargetCount] = useState(null);
+  const [loadingTargetCount, setLoadingTargetCount] = useState(false);
+
+  useEffect(() => {
+    if (isPolicyWise && form.selected_policy && form.channel) {
+      setLoadingTargetCount(true);
+      setTargetCount(null);
+      api
+        .getPolicyTargetCount(form.selected_policy, form.channel)
+        .then((res) => setTargetCount(res.target_count))
+        .catch(() => setTargetCount(0))
+        .finally(() => setLoadingTargetCount(false));
+    } else {
+      setTargetCount(null);
+    }
+  }, [isPolicyWise, form.selected_policy, form.channel]);
 
   const load = (silent = false) => {
     if (!silent) setFetchingData(true);
     return api
       .listCampaigns()
       .then(setCampaigns)
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => {
         if (!silent) setFetchingData(false);
       });
@@ -39,7 +55,7 @@ export default function Campaigns() {
     return api
       .listPolicies()
       .then(setPolicies)
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => {
         setLoadingPolicies(false);
       });
@@ -303,6 +319,17 @@ export default function Campaigns() {
                     ))
                   )}
                 </select>
+              )}
+              {form.selected_policy && (
+                <div style={{ marginTop: 8, fontSize: 13, color: "var(--t2)" }}>
+                  {loadingTargetCount ? (
+                    <span style={{ color: "var(--t3)" }}>Calculating target count...</span>
+                  ) : targetCount !== null ? (
+                    <span>
+                      Target Audience: <strong style={{ color: "var(--te)" }}>{targetCount}</strong> prospects
+                    </span>
+                  ) : null}
+                </div>
               )}
             </div>
           )}
