@@ -243,7 +243,7 @@ export default function Campaigns() {
               onChange={(e) => {
                 setIsPolicyWise(e.target.checked);
                 if (!e.target.checked) {
-                  setForm((f) => ({ ...f, selected_policies: [] }));
+                  setForm((f) => ({ ...f, selected_policy: "" }));
                 }
               }}
               style={{
@@ -312,7 +312,7 @@ export default function Campaigns() {
             disabled={
               loading ||
               !form.name ||
-              (isPolicyWise && form.selected_policies.length === 0)
+              (isPolicyWise && !form.selected_policy)
             }
             style={{ marginTop: 12 }}
           >
