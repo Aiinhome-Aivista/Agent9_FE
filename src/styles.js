@@ -2,7 +2,7 @@
    GLOBAL STYLES
 ══════════════════════════════════════════════════════════ */
 const STYLES = `
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#060C17;--surf:#0B1220;--card:#101928;--elev:#16213A;
@@ -14,7 +14,7 @@ const STYLES = `
   --rd:#F43F5E;--rdd:rgba(244,63,94,0.1);
   --pu:#A78BFA;--pud:rgba(167,139,250,0.1);
   --t1:#EEF2FF;--t2:#8BA4C0;--t3:#4A637E;--t4:#1E2E42;
-  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
+  --fd:'Inter',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;
   --r:8px;--rl:12px;
   --nav-bg: rgba(6,12,23,0.7);
 }

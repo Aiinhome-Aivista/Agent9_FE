@@ -91,6 +91,13 @@ export default function Campaigns() {
       }
       setShowNew(false);
       setIsPolicyWise(false);
+      setForm({
+        name: "",
+        campaign_type: "new_policy",
+        channel: "Email",
+        description: "",
+        selected_policy: "",
+      });
       await load();
     } catch (e) {
       setErr(e.message);
@@ -179,7 +186,18 @@ export default function Campaigns() {
             }}
           >
             <div className="ct">Create Campaign</div>
-            <button className="btn bg2 bxs" onClick={() => setShowNew(false)}>
+            <button className="btn bg2 bxs" onClick={() => {
+              setShowNew(false);
+              setForm({
+                name: "",
+                campaign_type: "new_policy",
+                channel: "Email",
+                description: "",
+                selected_policy: "",
+              });
+              setIsPolicyWise(false);
+              setErr("");
+            }}>
               <X size={12} />
             </button>
           </div>
