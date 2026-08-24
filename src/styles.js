@@ -178,7 +178,7 @@ html,body,#root{height:100%;font-family:var(--fb);background:var(--bg);color:var
 .fl{display:block;font-size:12px;font-weight:600;color:var(--t2);margin-bottom:5px}
 .fg{margin-bottom:14px}
 .air{background:var(--elev);border:1px solid var(--bdr-hi);border-radius:var(--rl);padding:16px;font-size:12px;color:var(--t2);line-height:1.75;white-space:pre-wrap}
-.tag{display:inline-flex;gap:4px;padding:3px 7px;border-radius:4px;font-size:10px;background:var(--elev);color:var(--t2);border:1px solid var(--bdr)}
+.sc{display:inline-block;padding:0;border-radius:0;font-family:var(--fb);font-size:11px;font-weight:400;line-height:1.5;background:transparent;color:var(--t2);border:none;word-break:break-word}
 .log-i{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--bdr);font-size:12px}
 .log-t{font-family:var(--fm);font-size:10px;color:var(--t3);flex-shrink:0;padding-top:2px}
 .log-a{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;flex-shrink:0;background:var(--card);color:var(--t2)}
