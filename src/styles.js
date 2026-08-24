@@ -188,11 +188,77 @@ html,body,#root{height:100%;font-family:var(--fb);background:var(--bg);color:var
 .stl::after{content:'';flex:1;height:1px;background:var(--bdr)}
 .ptb{display:inline-flex;padding:3px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
 .tLife{background:var(--amd);color:var(--am)}.tHealth{background:var(--grd);color:var(--gr)}.tMotor{background:var(--bld);color:var(--bl)}.tProperty{background:var(--pud);color:var(--pu)}.tCommercial{background:var(--ted);color:var(--te)}
+
+/* Urgency Colored Pill Text Badges */
+.ub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ub-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Critical — Red Pill */
+.uCritical {
+  background: rgba(244, 63, 94, 0.14);
+  color: #F43F5E;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+.uCritical-dot {
+  background: #F43F5E;
+  box-shadow: 0 0 6px rgba(244, 63, 94, 0.8);
+}
+
+/* High — Orange Pill */
+.uHigh {
+  background: rgba(255, 90, 20, 0.14);
+  color: #FF5A14;
+  border: 1px solid rgba(255, 122, 69, 0.3);
+}
+.uHigh-dot {
+  background: #FF5A14;
+  box-shadow: 0 0 6px rgba(255, 90, 20, 0.8);
+}
+
+/* Medium — Blue / Teal Pill */
+.uMedium {
+  background: rgba(59, 130, 246, 0.14);
+  color: #3B82F6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.uMedium-dot {
+  background: #3B82F6;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.8);
+}
+
+/* Low — Green Pill */
+.uLow {
+  background: rgba(34, 197, 94, 0.14);
+  color: #22C55E;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.uLow-dot {
+  background: #22C55E;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+}
+
 @keyframes fi2{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .ani{animation:fi2 .25s ease forwards}
 @keyframes spin{to{transform:rotate(360deg)}}
 .spin{animation:spin 1s linear infinite}
 .err{background:var(--rdd);border:1px solid rgba(244,63,94,.25);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--rd);margin-bottom:12px}
+
 
 /* ══════════════════════════════════════════════════════════
    LANDING PAGE STYLES

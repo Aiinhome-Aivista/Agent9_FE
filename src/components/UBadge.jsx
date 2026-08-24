@@ -1,3 +1,10 @@
 export default function UBadge({ u }) {
-  return <span className={`ub u${u}`}>{u}</span>;
+  const urgency = u || "Medium";
+  return (
+    <span className={`ub u${urgency}`}>
+      <span className={`ub-dot u${urgency}-dot`} />
+      {urgency}
+    </span>
+  );
 }
+
