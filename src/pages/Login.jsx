@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Lock,
   Mail,
@@ -6,14 +6,45 @@ import {
   RefreshCw,
   ArrowLeft,
   Check,
+  Database,
+  Sparkles,
 } from "lucide-react";
 import * as api from "../api";
+
+const CRM_ADMIN_PERSONA = {
+  id: "crm",
+  name: "CRM Admin",
+  email: "crm@system.com",
+  password: "123456",
+  role: "Ingestion & Sync Hub",
+  icon: Database,
+  color: "var(--bl)",
+  bgColor: "var(--bld)",
+};
 
 export default function Login({ onLogin, onBackToLanding }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSelected, setIsSelected] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleSelectCrmAdmin = () => {
+    setEmail(CRM_ADMIN_PERSONA.email);
+    setPassword(CRM_ADMIN_PERSONA.password);
+    setIsSelected(true);
+    setError("");
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setIsSelected(false);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setIsSelected(false);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,7 +81,6 @@ export default function Login({ onLogin, onBackToLanding }) {
       }
 
       onLogin(res);
-
     } catch (e) {
       setError(e.message || "Login failed");
     } finally {
@@ -112,7 +142,7 @@ export default function Login({ onLogin, onBackToLanding }) {
                 style={{ paddingLeft: 36 }}
                 placeholder="name@organization.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 disabled={loading}
               />
             </div>
@@ -140,7 +170,7 @@ export default function Login({ onLogin, onBackToLanding }) {
                 style={{ paddingLeft: 36 }}
                 placeholder="••••••••••••"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
                 disabled={loading}
               />
             </div>
@@ -167,13 +197,70 @@ export default function Login({ onLogin, onBackToLanding }) {
               "Sign In"
             )}
           </button>
-
-          <div className="auth-sec-msg">
-            <ShieldCheck size={14} style={{ color: "var(--gr)" }} />
-            <span>Session Guardrails Engine: ACTIVE (v2.4)</span>
-          </div>
         </form>
+
+        {/* Persona Tile at the Bottom */}
+        <div className="persona-bottom-section">
+          <div className="persona-title" style={{ marginBottom: 8 }}>
+            <Sparkles size={13} style={{ color: "var(--bl)" }} /> Quick Login
+          </div>
+
+          <div
+            className={`persona-single-tile ${isSelected ? "active" : ""}`}
+            onClick={handleSelectCrmAdmin}
+            title={`Auto-fill ${CRM_ADMIN_PERSONA.name} credentials (${CRM_ADMIN_PERSONA.email})`}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div
+                className="persona-icon-box"
+                style={{
+                  background: CRM_ADMIN_PERSONA.bgColor,
+                  color: CRM_ADMIN_PERSONA.color,
+                }}
+              >
+                <Database size={15} />
+              </div>
+              <div>
+                <div className="persona-name">{CRM_ADMIN_PERSONA.name}</div>
+                <div className="persona-role-tag">
+                  {CRM_ADMIN_PERSONA.email} • {CRM_ADMIN_PERSONA.role}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              {isSelected ? (
+                <span
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: "var(--gr)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                >
+                  <Check size={12} strokeWidth={3} /> Loaded
+                </span>
+              ) : (
+                <span
+                  className="btn bxs bg2"
+                  style={{ fontSize: 10, padding: "3px 8px" }}
+                >
+                  Auto-Fill
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="auth-sec-msg">
+          <ShieldCheck size={14} style={{ color: "var(--gr)" }} />
+          <span>Session Guardrails Engine: ACTIVE (v2.4)</span>
+        </div>
       </div>
     </div>
   );
 }
+
+
