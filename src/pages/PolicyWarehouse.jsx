@@ -118,7 +118,7 @@ export default function PolicyWarehouse() {
     const savedPolicyName = form.name;
     const currentUploadedFile = uploadedFile;
     try {
-      await api.createPolicy({
+      const created = await api.createPolicy({
         ...form,
         features: form.features
           .split(",")
@@ -129,6 +129,13 @@ export default function PolicyWarehouse() {
           .map((s) => s.trim())
           .filter(Boolean),
       });
+      if (created && created.id) {
+        try {
+          await api.indexPolicy(created.id);
+        } catch (idxErr) {
+          console.error("Auto-indexing failed:", idxErr);
+        }
+      }
       if (currentUploadedFile) {
         setUploadedFiles((prev) => [
           ...prev,
@@ -565,7 +572,7 @@ export default function PolicyWarehouse() {
                       </span>
                     ))}
                   </div>
-                  {p.is_indexed && (p.propensity_targets || []).length > 0 && (
+                  {(p.propensity_targets || []).length > 0 && (
                     <div>
                       <div
                         style={{
